@@ -1,0 +1,90 @@
+
+
+div.top-bar{
+  background-color: #8B0913;
+}
+.menu > li > a{
+  background-color: #8B0913;
+  color: #fff;
+}
+.menu > li > a:hover{
+  color: #f7f0cc;
+}
+div.top-bar-left h3{
+  color: #fff;
+}
+.main-container{
+  display: flex;
+  flex-flow: row nowrap;
+  height: 46rem;
+}
+.left-cont{
+  width: 70%;
+  margin-left: 1em;
+  margin-top: 1em;
+}
+.fc-event, .fc-event-dot{
+  background-color: #404F66;
+}
+.fc-event{
+  border: 1px solid #404F66;
+}
+.fc-unthemed .fc-today{
+  background: #fed1d5;
+}
+.calendario{
+  height: 100%;
+}
+.right-cont{
+  width: 30%;
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 1em;
+}
+
+.add-btn{
+  height: 70%;
+  padding: 0.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: row wrap;
+  color: #fff;
+}
+.add-btn{
+  background-color: #404F66;
+}
+label{
+  color: #fff;
+}
+#dia-set{
+  margin-top: 2em;
+}
+.btn-cont-enviar{
+  display: flex;
+  justify-content: center;
+}
+.delete-btn{
+  padding: 1em;
+  height: 20%;
+  background-color: #8B0913;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  color: #fff;
+}
+.delete-btn h6{
+  width: 90%;
+}
+.delete-btn img{
+
+  height: 60px;
+}
+table{
+  background-color: transparent;
+}
+.calendar
+{
+	width: 900px;
+	margin: 0 auto;
+}
