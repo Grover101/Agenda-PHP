@@ -6,9 +6,9 @@ class ConectorDB
     private $host = 'localhost';
     private $user = 'root';
     private $password = '';
-    private $database = 'agendaDB';
+    public $database = 'agendaDB';
 
-    private $conexion;
+    public $conexion;
 
     // funcion de verificacion de conexion
     function verifyConexion()
@@ -66,7 +66,7 @@ class ConectorDB
 
     function verifyUsers() // verificar si existen usuarios
     {
-        $sql = 'SELECT COUNT(email) FROM usuarios;'; // contar numero de ususarios
+        $sql = 'SELECT COUNT(email) FROM usuarios'; // contar numero de ususarios
         $totalUsers = $this->ejecutarQuery($sql); // ejecutar sentencia
         while ($row = $totalUsers->fetch_assoc())
             return $row['COUNT(email)']; // devuelve resultado

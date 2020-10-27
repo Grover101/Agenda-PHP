@@ -16,8 +16,8 @@ if (isset($_SESSION['email'])) { //Verificar que no haya ninguna sesión iniciad
             if ($resultado_consulta->num_rows != 0) { //Si el resultado es mayor que 0 el email se encuentra registrado
                 $fila = $resultado_consulta->fetch_assoc(); //recorrer los resultados
                 if (password_verify($_POST['password'], $fila['password'])) { //Verificar que la contraseña ingresada corresponda con el usuario de manera encriptada
-                    $response['msg'] = 'Redireccionando'; //Enviar mensaje de redirección
-                    $response['acceso'] = 'Usuario Autorizado'; //Validar el acceso del usuario
+                    $response['msg'] = 'OK'; //Enviar mensaje de redirección
+                    $response['acceso'] = 'Autorizado'; //Validar el acceso del usuario
                     $_SESSION['email'] = $fila['email']; //Asiganar la sesion al usuario actual
                 } else {
                     $response['msg'] = 'Contraseña incorrecta'; //Si la contraseña no existe mostrar mensaje
