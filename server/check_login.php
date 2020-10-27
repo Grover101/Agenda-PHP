@@ -5,8 +5,8 @@ $con = new ConectorDB(); //Iniciar el objeto ConectorBD
 $response['conexion'] = $con->initConexion($con->database); //Obtener el estado de la coenxión
 
 if (isset($_SESSION['email'])) { //Verificar que no haya ninguna sesión iniciada
-    $response['msg'] = 'Redireccionando'; //Enviar mensaje de redirección
-    $response['acceso'] = "Usuario Autorizado"; //Devolver el estado de sesión iniciada
+    $response['msg'] = 'OK'; //Enviar mensaje de redirección
+    $response['acceso'] = "Autorizado"; //Devolver el estado de sesión iniciada
 } else {
     if ($response['conexion'] == 'OK') { //Si no existe sesión iniciada
         if ($con->verifyUsers() > 0) { //Verificar que la base de datos tenga usuarios registrados con la función verifyUsers

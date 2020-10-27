@@ -12,7 +12,7 @@ if ($response['msg'] == 'OK') {
         if ($fila['allday'] == 0) { // verificar si el regitro esta fullday
             $allDay = false;
             $response['eventos'][$i]['start'] = $fila['fecha_inicio'] . 'T' . $fila['hora_inicio'];
-            $response['eventos'][$i]['end'] = $fila['fecha_finalizacion'] . 'T' . $fila['hora_finalizacion'];
+            $response['eventos'][$i]['end'] = $fila['fecha_fin'] . 'T' . $fila['hora_fin'];
         } else {
             $allDay = true;
             $response['eventos'][$i]['start'] = $fila['fecha_inicio'];

@@ -1,7 +1,29 @@
 $(function () {
   var l = new Login();
   console.log("hola");
+  validarSession();
 });
+
+/*Verificar que no exista una sesión iniciada*/
+function validarSession() {
+  $.ajax({
+    url: "../server/session.php",
+    type: "post",
+    data: {},
+    dataType: "json",
+    success: function (data) {
+      if (data.msg != "") {
+        //Si la respuesta del servidor no es vacía
+        alert("Ya existe una sesión iniciada. Redireccionando"); //Mostrar mensaje de sesión iniciada
+        window.location.href = "./main.html"; //Redireccionar a la página main.html
+      }
+    },
+    error: function (data) {
+      $(".row.align-center").fadeOut("fast"); //En caso de ocurrir un error
+      alert("Error inesperado. " + data); //Mostrar mensaje con la respuesta de la consulta
+    },
+  });
+}
 
 class Login {
   constructor() {
@@ -28,9 +50,7 @@ class Login {
       data: form_data,
       type: "POST",
       success: function (php_response) {
-        console.log(php_response.msg);
         if (php_response.msg == "OK") {
-          console.log("entra");
           window.location.href = "main.html";
         } else {
           alert(php_response.msg);
