@@ -1,10 +1,8 @@
-@import 'app.css';
-
-body{
-  background-image: url('../img/fondo.jpg');
+body {
+  background-image: url("../img/fondo.jpg");
   background-size: cover;
 }
-.main{
+.main {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,14 +10,34 @@ body{
   height: 50.6rem;
   background-color: rgba(0, 0, 0, 0.5);
 }
-.login-container{
+.login-container {
   width: 40%;
 }
-.callout.login h4{
+.callout.login h4 {
   text-align: center;
-  color: #8B0913;
+  color: #8b0913;
 }
-div.btn-container{
+div.btn-container {
   display: flex;
   justify-content: center;
+}
+
+#message {
+  padding: 15px;
+  display: block;
+  text-align: center;
+  color: white;
+  background: rgba(8, 13, 41, 0.71);
+  margin: 10px;
+}
+
+#generarUsuarios {
+  display: block;
+  margin: 10px;
+  color: white;
+  background-color: #404f66b3;
+  text-decoration: none;
+  padding: 5px 10px;
+  border-top: 2px solid #404f66;
+  text-align: center;
 }

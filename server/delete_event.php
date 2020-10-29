@@ -4,7 +4,7 @@ require('./conector.php');
 $con = new ConectorDB();
 $response['conexion'] = $con->initConexion($con->database);
 if ($response['conexion'] == 'OK')
-    if ($con->eliminarRegistro('eventos', 'id=' . $_POST['id']))
+    if ($con->eliminarRegistro('eventos', 'id=' . $_POST['id'])) // elimina el evento solicitado
         $response['msg'] = 'OK';
     else
         $response['msg'] = "Ha ocurrido un error al Eliminar el evento";

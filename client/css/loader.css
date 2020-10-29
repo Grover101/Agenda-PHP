@@ -1,0 +1,35 @@
+.overlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: rgba(255, 255, 255, 0.85);
+  z-index: 50;
+}
+.loader-container {
+  position: absolute;
+  top: 45%;
+  left: 0;
+  z-index: 100;
+  color: #404f66;
+  right: 0;
+  text-align: center;
+}
+.loader {
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid #404f66;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+  position: relative;
+  color: #404f66;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

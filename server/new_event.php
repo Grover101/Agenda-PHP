@@ -13,13 +13,13 @@ if ($response['conexion'] == 'OK') {
     $data['allday'] = $_POST['allDay'];
     $data['fk_usuarios'] = '"' . $_SESSION['email'] . '"';
 
-    if ($con->insertData('eventos', $data)) { // Insertar la información en la base de datos
-        $resultado = $con->consultar(['eventos'], ['MAX(id)']); // Obtener el id registrado perteneciente al nuevo registro
+    if ($con->insertData('eventos', $data)) { // insertar la información en la base de datos
+        $resultado = $con->consultar(['eventos'], ['MAX(id)']); // obtener el id registrado perteneciente al nuevo registro
         while ($fila = $resultado->fetch_assoc())
-            $response['id'] = $fila['MAX(id)']; // Enviar ultimo Id guardado como parámetro para el calendario
+            $response['id'] = $fila['MAX(id)']; // enviar ultimo Id guardado como parámetro para el calendario
         $response['msg'] = 'OK';
     } else
-        $response['msg'] = "Ha ocurrido un error al guardar el evento"; // Mensaje de error
+        $response['msg'] = "Ha ocurrido un error al guardar el evento"; // mensaje de error
 } else
-    $response['msg'] = "Error en la comunicacion con la base de datos"; // Mensaje de error en caso de conexion fallida
+    $response['msg'] = "Error en la comunicacion con la base de datos"; // mensaje de error en caso de conexion fallida
 echo json_encode($response);

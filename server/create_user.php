@@ -15,7 +15,7 @@ if ($response['conexion'] == 'OK') { //  si la conexión es exitosa
     // definir los valores de las variables a insertar en la base de datos
     $defaultPassword = '123'; // contrasenia por defecto para todos los usuarios
     $email = "hola@gmail.com";
-    $nombre = "Usuario Hola";
+    $nombre = "Hola";
     $password = password_hash($defaultPassword, PASSWORD_DEFAULT); // encriptar la contraseña
     $fecha_nacimiento = "2000-10-20";
     // ejecutar la sentencia
@@ -38,7 +38,7 @@ if ($response['conexion'] == 'OK') { //  si la conexión es exitosa
     $response['msg'] = 'Información de inicio de sesion:</br>email:'; // mostrar mensaje con la infirmación de los usuarios guardados
     $getUsers = $con->consultar(['usuarios'], ['*'], $condicion = ""); // obtener los usuarios generados anteriormente
     while ($fila = $getUsers->fetch_assoc())
-        $response['msg'] .= $fila['email'];
+        $response['msg'] .= ' ' . $fila['email'] . '<br>';
     $response['msg'] .= '</br>contraseña: ' . $defaultPassword; // mostrar la contraseña por defecto
 } else {
     $response['resultado'] = "0"; // resultado de error

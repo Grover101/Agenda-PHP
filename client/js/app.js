@@ -4,7 +4,6 @@ class EventsManager {
   constructor() {
     this.obtenerDataInicial();
   }
-
   obtenerDataInicial() {
     let url = "../server/getEvents.php";
     $.ajax({
@@ -16,15 +15,19 @@ class EventsManager {
       type: "GET",
       success: (data) => {
         if (data.msg == "OK") {
-          this.poblarCalendario(data.eventos);
-          return data.eventos;
+          if (data.getData == "OK") {
+            this.poblarCalendario(data.eventos);
+            return data.eventos;
+          } else {
+            alert("Hubo un error al obtener los eventos.");
+          }
         } else {
           alert(data.msg);
           window.location.href = "index.html";
         }
       },
       error: function () {
-        alert("error en la comunicación conel servidor");
+        alert("Error en la comunicación con el servidor");
       },
     });
   }
@@ -127,7 +130,6 @@ class EventsManager {
       alert("Título y fecha de inicio no pueden ser vacios");
     }
   }
-
   validarForm() {
     if ($("#titulo").val() != "" && $("#start_date").val() != "") {
       return true;
@@ -149,6 +151,7 @@ class EventsManager {
       type: "POST",
       success: (data) => {
         if (data.msg == "OK") {
+          $(".calendario").fullCalendar("removeEvents", event.id);
           alert("Se ha eliminado el evento exitosamente");
         } else {
           alert(data.msg);
@@ -218,19 +221,6 @@ $(function () {
   });
 });
 
-$(function () {
-  initForm();
-  var e = new EventsManager();
-  $("form").submit(function (event) {
-    event.preventDefault();
-    e.anadirEvento();
-  });
-
-  $("#logout").on("click", function (e) {
-    logout();
-  });
-});
-
 function initForm() {
   $("#start_date, #titulo, #end_date").val("");
   $("#start_date, #end_date").datepicker({
@@ -278,10 +268,7 @@ function logout() {
     type: "post",
     dataType: "json",
     success: function (data) {
-      if (data.msg == "Redireccionar") {
-        alert("Sesion cerrada");
-        window.location.href = "index.html";
-      }
+      window.location.href = "./index.html";
     },
   });
 }

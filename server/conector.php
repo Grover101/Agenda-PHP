@@ -1,16 +1,15 @@
 <?php
 session_start();
-
 class ConectorDB
 {
+    // datos del servidor
     private $host = 'localhost';
-    private $user = 'root';
+    public $user = 'root';
     private $password = '';
     public $database = 'agendaDB';
+    private $conexion;
 
-    public $conexion;
-
-    // funcion de verificacion de conexion
+    // funcion de verificacino de conexion
     function verifyConexion()
     {
         $init = @$this->conexion = new mysqli($this->host, $this->user, $this->password); // iniciar conexion con el servidor
@@ -46,30 +45,36 @@ class ConectorDB
         echo json_encode($conexion); //Devolver respuesta
     }
 
-    function initConexion($DataBase)
+    // funcion de inicializacion de conexion
+    function initConexion($nombre_db)
     {
-        $this->conexion = new mysqli($this->host, $this->user, $this->password, $DataBase);
-        if ($this->conexion->connect_error)
-            return $this->conexion->connect_error;
-        else
+        @$this->conexion = new mysqli($this->host, $this->user, $this->password, $nombre_db);
+        if ($this->conexion->connect_error) {
+            return $this->conexion->connect_errno;
+        } else {
             return "OK";
+        }
     }
 
+    // funcion para validar la sesion del usuario
     function userSession()
     {
-        if (isset($_SESSION['email']))
-            $response['msg'] = $_SESSION['email'];
-        else
+        if (isset($_SESSION['email'])) { // verificar que la sesion no sea vacía
+            $response['msg'] = $_SESSION['email']; // si hay una sesión iniciada guardar el nombre del usuario
+        } else {
             $response['msg'] = '';
+        }
         return json_encode($response);
     }
 
-    function verifyUsers() // verificar si existen usuarios
+    // funcion que verfica si existen usuarios en la base de datos
+    function verifyUsers()
     {
-        $sql = 'SELECT COUNT(email) FROM usuarios'; // contar numero de ususarios
-        $totalUsers = $this->ejecutarQuery($sql); // ejecutar sentencia
-        while ($row = $totalUsers->fetch_assoc())
-            return $row['COUNT(email)']; // devuelve resultado
+        $sql = 'SELECT COUNT(email) FROM usuarios;';
+        $totalUsers = $this->ejecutarQuery($sql);
+        while ($row = $totalUsers->fetch_assoc()) {
+            return $row['COUNT(email)'];
+        }
     }
 
     function getConexion()
@@ -77,26 +82,26 @@ class ConectorDB
         return $this->conexion;
     }
 
-    //Crear nueva base de datos
+    // funcion que crear nueva base de datos
     function newDatabase()
     {
-        $this->conexion = new mysqli($this->host, $this->user, $this->password); //Iniciar la conexión con el servidor
-        $query = $this->conexion->query('CREATE DATABASE IF NOT EXISTS ' . $this->database); //Crear la base de datos si no existe
+        $this->conexion = new mysqli($this->host, $this->user, $this->password);
+        $query = $this->conexion->query('CREATE DATABASE IF NOT EXISTS ' . $this->database);
         if ($query == 1) {
-            return "OK"; //Devolver respuesta correcta
+            return "OK";
         } else {
-            return "Error"; //Devolver error;
+            return "Error";
         }
     }
 
-    //Crear tabla
+    // funcion para crear tabla
     function createTable($nombre_tbl, $campos)
     {
-        $result = @$this->conexion = new mysqli($this->host, $this->user, $this->password, $this->database); //Iniciar la conexión con el servidor
-        if ($result->connect_errno) { //Si ocurre un error
-            return $result->connect_errno; //Devolver el error
+        $result = @$this->conexion = new mysqli($this->host, $this->user, $this->password, $this->database);
+        if ($result->connect_errno) {
+            return $result->connect_errno;
         } else {
-            //Construcción del script
+            // construccion del script
             $sql = 'CREATE TABLE IF NOT EXISTS ' . $nombre_tbl . ' (';
             $length_array = count($campos);
             $i = 1;
@@ -110,12 +115,12 @@ class ConectorDB
                 $i++;
             }
 
-            $query =  $this->ejecutarQuery($sql); //Ejecutar sentencia SQL
+            $query =  $this->ejecutarQuery($sql);
 
             if ($query == 1) {
-                return "OK"; //Devolver respuesta positiva correcta
+                return "OK";
             } else {
-                return "Error"; //Devolver error;
+                return "Error";
             }
         }
     }
@@ -131,18 +136,19 @@ class ConectorDB
     }
 
     function nuevaRestriccion($tabla, $restriccion)
-    { //Crear restrincciones
+    {
         $sql = 'ALTER TABLE ' . $tabla . ' ' . $restriccion;
         return $this->ejecutarQuery($sql);
     }
 
+    // crear relciones
     function nuevaRelacion($from_tbl, $to_tbl, $fk_foreign_key_name, $from_field, $to_field)
-    { //Crear relaciones de claves foráneas
+    {
         $sql = 'ALTER TABLE ' . $from_tbl . ' ADD CONSTRAINT ' . $fk_foreign_key_name . ' FOREIGN KEY (' . $from_field . ') REFERENCES ' . $to_tbl . '(' . $to_field . ');';
         return $this->ejecutarQuery($sql);
     }
 
-    //Función para insertar información en tablas de base de datos
+    // funcion para insertar informacion en tablas de base de datos
     function insertData($tabla, $data)
     {
         $sql = 'INSERT INTO ' . $tabla . ' (';
@@ -166,7 +172,7 @@ class ConectorDB
         return $this->ejecutarQuery($sql);
     }
 
-    //Función para actualizar registro en la base de datos
+    // funcion para actualizar registro en la base de datos
     function actualizarRegistro($tabla, $data, $condicion)
     {
         $sql = 'UPDATE ' . $tabla . ' SET ';
@@ -181,14 +187,14 @@ class ConectorDB
         return $this->ejecutarQuery($sql);
     }
 
-    //Función para eliminar registro en base de datos
+    // funcion para eliminar registro en base de datos
     function eliminarRegistro($tabla, $condicion)
     {
         $sql = "DELETE FROM " . $tabla . " WHERE " . $condicion . ";";
         return $this->ejecutarQuery($sql);
     }
 
-    // Funcion para consultar informacion
+    // funcion para consultar informacion en DB
     function consultar($tablas, $campos, $condicion = "")
     {
         $sql = "SELECT ";
@@ -219,10 +225,10 @@ class ConectorDB
     }
 }
 
-class Usuarios //Crear objeto Usuario
+// crar atributos para la tabla usuarios
+class Usuarios
 {
-    public $nombreTabla = 'usuarios'; //Definir nombre de la tabla
-    /*Matriz con las columnas que componen la tabla usuarios*/
+    public $nombreTabla = 'usuarios';
     public $data = [
         'email' => 'varchar(50) NOT NULL PRIMARY KEY',
         'nombre' => 'varchar(50) NOT NULL',
@@ -231,17 +237,17 @@ class Usuarios //Crear objeto Usuario
     ];
 }
 
+// crar atributos para la tabla eventos
 class Eventos
 {
-    public $nombreTabla = 'eventos'; //Definir nombre de la tabla
-    /*Matriz con las columnas que componen la tabla eventos*/
+    public $nombreTabla = 'eventos';
     public $data = [
         'id' => 'INT NOT NULL PRIMARY KEY AUTO_INCREMENT',
         'titulo' => 'VARCHAR(50) NOT NULL',
         'fecha_inicio' => 'date NOT NULL',
         'hora_inicio' => 'varchar(20)',
-        'fecha_finalizacion' => 'varchar(20)',
-        'hora_finalizacion' => 'varchar(20)',
+        'fecha_fin' => 'varchar(20)',
+        'hora_fin' => 'varchar(20)',
         'allday' => 'tinyint(1) NOT NULL',
         'fk_usuarios' => 'varchar(50) NOT NULL'
     ];

@@ -1,6 +1,6 @@
 <?php
 
-session_start(); // Iniciar el manejador de sesiones
+session_start(); // iniciar el manejador de sesiones
 if (isset($_SESSION['email'])) { // verificar si existe una sesion
     session_destroy(); // destruir la sesion actual
     $response['msg'] = 'Redireccionar'; // redireccion

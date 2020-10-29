@@ -1,14 +1,21 @@
-<!doctype html>
+<!DOCTYPE html>
 <html class="no-js" lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Log in</title>
-    <link rel="stylesheet" href="css/foundation.min.css">
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/foundation.min.css" />
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/loader.css" />
   </head>
   <body>
+    <div class="overlay">
+      <div class="loader-container">
+        <div class="loader" style="left: calc(50% - 60px)"></div>
+        <h3>Verificando conexion al servidor</h3>
+      </div>
+    </div>
     <div class="main">
       <div class="login-container">
         <div class="callout primary login">
@@ -16,13 +23,15 @@
           <form>
             <div class="row align-center">
               <div class="small-7 columns">
-                <label>Usuario
-                  <input type="text" id="user" required>
+                <label
+                  >Usuario
+                  <input type="text" id="user" required />
                 </label>
               </div>
               <div class="small-7 columns">
-                <label>Contraseña
-                  <input type="password" id="password" required>
+                <label
+                  >Contraseña
+                  <input type="password" id="password" required />
                 </label>
               </div>
               <div class="small-7 columns btn-container">
@@ -30,6 +39,10 @@
               </div>
             </div>
           </form>
+          <div id="message" style="display: none" class="small"></div>
+          <a href="#" id="generarUsuarios" style="display: none"
+            >Inicializar usuarios</a
+          >
         </div>
       </div>
     </div>
